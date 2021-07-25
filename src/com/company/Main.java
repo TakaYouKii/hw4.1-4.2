@@ -3,18 +3,22 @@ package com.company;
 import java.util.Random;
 
 public class Main {
-    public static int bossHealth = 700;
-    public static int bossDamage = 50;
+    public static int bossHealth = 1000;
+    public static int bossDamage = 500;
     public static String bossDefence = "";
-    public static String[] heroesAttackType = {"Physical", "Magical", "Kinetic", "Medic"};
-    public static int[] heroesHealth = {270, 260, 250, 300};
-    public static int[] heroesDamage = {15, 20, 10, 0};
+    public static String[] heroesAttackType = {"Physical", "Magical", "Kinetic", "Medical", "Lucky", "Golem", "Berserk", "Thor"};
+    public static int[] heroesHealth = {270, 260, 250, 300, 220, 1000, 200, 240};
+    public static int[] heroesDamage = {15, 20, 10, 0, 15, 5, 10, 15};
 
 
     public static void main(String[] args) {
         printStatistics();
         while (!isGameFinished()) {
             round();
+            lucKy();
+            goLem();
+            berSerk();
+            tHor();
         }
     }
 
@@ -102,17 +106,79 @@ public class Main {
     public static void medicsTreatment() {
         int index = 0;
         for (String name : heroesAttackType) {
-            if (name == "Medic") {
+            if (name == "Medical") {
                 if (heroesHealth[index] > 0) {
                     for (int i = 0; i < heroesHealth.length; i++) {
                         if (heroesHealth[i] < 100 && heroesHealth[i] > 0 && i != index) {
                             heroesHealth[i] = heroesHealth[i] + 30;
-                            System.out.println("Medic save  "+ heroesAttackType[i]+ " "+heroesHealth[i]);
+                            System.out.println("Medic save  " + heroesAttackType[i] + " " + heroesHealth[i]);
                             break;
 
                         }
                     }
                 }
+            }
+            index++;
+        }
+    }
+
+    public static void lucKy() {
+        int index = 0;
+        Random random = new Random();
+        boolean lck = random.nextBoolean();
+        for (String name : heroesAttackType) {
+            if (name.equals("Lucky")) {
+                if (lck = true)
+                    bossDamage = 0;
+                System.out.println("Laci uklon");
+            }
+        }
+        index++;
+    }
+
+    public static void goLem() {
+        int index = 0;
+        int b = bossDamage / 5;
+        Random random = new Random();
+        boolean glm = random.nextBoolean();
+        for (String name : heroesAttackType) {
+            if (name.equals("Golem")) {
+                if (glm = true) {
+                    bossDamage = bossDamage - b;
+                    heroesHealth[5] = heroesHealth[5] + b;
+                }
+                if (!glm) {
+                    bossDamage = bossDamage;
+                }
+            }
+        }
+    }
+
+    public static void berSerk() {
+        int index = 0;
+        int a = bossDamage / 2;
+        Random random = new Random();
+        boolean brsk = random.nextBoolean();
+        for (String name : heroesAttackType) {
+            if (name.equals("Berserk")) {
+                if (brsk = true) {
+                    bossDamage = bossDamage - a;
+                    heroesHealth[6] = heroesHealth[6] - a;
+                    heroesDamage[6] = heroesDamage[6] + a;
+                }
+                if (!brsk) {
+                    bossDamage = bossDamage;
+                }
+            }
+            index++;
+        }
+    }
+
+    public static void tHor() {
+        int index = 0;
+        for (String name : heroesAttackType) {
+            if (name == "Thor") {
+                bossDamage = 0;
             }
             index++;
         }
